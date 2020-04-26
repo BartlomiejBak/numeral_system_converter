@@ -8,11 +8,13 @@ public class DecimalNumber {
     }
 
     public String toNonDecimal(int radix, int range) {
-        String result = "";
+        String result;
         if (radix == 1) {
-            result = newBaseIntPart((int) this.number / 1, radix);
+            result = newBaseIntPart((int) this.number, radix);
+        } else if (this.number % 1 == 0) {
+            result = newBaseIntPart((int) this.number, radix);
         } else {
-            String intPart = newBaseIntPart((int) this.number / 1, radix);
+            String intPart = newBaseIntPart((int) this.number, radix);
             String fractPart = newBaseFractPart(this.number % 1, radix, range);
             result =  intPart + "." + fractPart;
         }
@@ -20,26 +22,24 @@ public class DecimalNumber {
     }
 
     private String newBaseFractPart(double v, int radix, int range) {
-        String fractPart = "";
-        String nextSign = "";
+        StringBuilder fractPart = new StringBuilder();
+        String nextSign;
         for (int i = 0; i < range; i++) {
             v *= radix;
-            nextSign = Integer.toString((int) v / 1, radix);
-            fractPart += nextSign;
+            nextSign = Integer.toString((int) v, radix);
+            fractPart.append(nextSign);
             v = v % 1;
         }
-        return fractPart;
+        return fractPart.toString();
     }
 
     private String newBaseIntPart(int v, int radix) {
-        String intPart = "";
+        StringBuilder intPart = new StringBuilder();
         if (radix == 1) {
-            for (int i = 0; i < v; i++) {
-                intPart += "1";
-            }
+            intPart.append("1".repeat(Math.max(0, v)));
         } else {
-            intPart = Integer.toString(v, radix);
+            intPart = new StringBuilder(Integer.toString(v, radix));
         }
-        return intPart;
+        return intPart.toString();
     }
 }

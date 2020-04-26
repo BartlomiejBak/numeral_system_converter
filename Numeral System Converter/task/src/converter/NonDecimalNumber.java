@@ -10,7 +10,7 @@ public class NonDecimalNumber {
     }
 
     public double toDecimal() {
-        double decimalValue = 0;
+        double decimalValue;
         String[] initialValue = this.number.split("\\.");
         if (initialValue.length == 2) {
             decimalValue = intPart(initialValue[0], this.radix) + fractionalPart(initialValue[1], radix);

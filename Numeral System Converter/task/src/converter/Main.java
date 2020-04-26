@@ -1,14 +1,43 @@
 package converter;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        int sourceRadix = scanner.nextInt();
-        String sourceNumber = scanner.next();
-        int targetRadix = scanner.nextInt();
+        ArrayList<String> inpData = new ArrayList<>();
 
+        while(scanner.hasNext()) {
+            inpData.add(scanner.nextLine());
+        }
+        if (inpData.size() == 3) {
+
+            String firstLine = inpData.get(0);
+            String secondLine = inpData.get(1);
+            String thirdLine = inpData.get(2);
+
+            boolean correctInts = correctInt(firstLine) && correctInt(thirdLine);
+
+            if (correctInts) {
+                int sourceRadix = Integer.valueOf(firstLine);
+                int targetRadix = Integer.valueOf(thirdLine);
+                boolean correctSourceRadix = true;
+
+                if (correctSourceRadix && targetRadix > 0 && targetRadix < 37) {
+                    convert(sourceRadix, secondLine, targetRadix);
+                } else {
+                    System.out.println("Error");
+                }
+            } else {
+                System.out.println("Error");
+            }
+        } else {
+            System.out.println("Error");
+        }
+    }
+
+    public static void convert (int sourceRadix, String sourceNumber, int targetRadix) {
         double decimalValue;
 
         if (sourceRadix != 10) {
@@ -24,40 +53,18 @@ public class Main {
             DecimalNumber numberDec = new DecimalNumber(decimalValue);
             System.out.println(numberDec.toNonDecimal(targetRadix,5));
         }
-
-
-
-
-
-
-
-        /*
-
-        //int input = scanner.nextInt();
-        //int system = scanner.nextInt();
-
-        String symbol = "";
-        String value = "";
-
-
-        switch (system) {
-            case 2:
-                symbol = "0b";
-                value = Integer.toBinaryString(input);
-                break;
-            case 8:
-                symbol = "0";
-                value = Integer.toOctalString(input);
-                break;
-            case 16:
-                symbol = "0x";
-                value = Integer.toHexString(input);
-                break;
-            default:
-                break;
-        }
-        System.out.println(symbol + value);
-         */
-
     }
+
+    public static boolean correctInt(String line) {
+        char[] arr = line.toCharArray();
+        boolean correct = true;
+        for (char c : arr) {
+            if (c < '0' || c > '9'){
+                correct = false;
+            }
+        }
+        return correct;
+    }
+
+
 }
