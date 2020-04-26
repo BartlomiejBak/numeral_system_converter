@@ -20,11 +20,10 @@ public class Main {
             boolean correctInts = correctInt(firstLine) && correctInt(thirdLine);
 
             if (correctInts) {
-                int sourceRadix = Integer.valueOf(firstLine);
-                int targetRadix = Integer.valueOf(thirdLine);
-                boolean correctSourceRadix = true;
+                int sourceRadix = Integer.parseInt(firstLine);
+                int targetRadix = Integer.parseInt(thirdLine);
 
-                if (correctSourceRadix && targetRadix > 0 && targetRadix < 37) {
+                if (targetRadix > 0 && targetRadix < 37) {
                     convert(sourceRadix, secondLine, targetRadix);
                 } else {
                     System.out.println("Error");
@@ -59,8 +58,9 @@ public class Main {
         char[] arr = line.toCharArray();
         boolean correct = true;
         for (char c : arr) {
-            if (c < '0' || c > '9'){
+            if (c < '0' || c > '9') {
                 correct = false;
+                break;
             }
         }
         return correct;
